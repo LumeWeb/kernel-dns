@@ -1,0 +1,67 @@
+{
+	"name": "@lumeweb/kernel-dns",
+	"version": "0.1.0",
+	"description": "DNS module for Skynet Kernel",
+	"main": "dist/index.js",
+	"scripts": {
+		"cleanhack": "rimraf node_modules/crypto-browserify/node_modules && rimraf node_modules/@types/web",
+		"build-script": "tsc --project tsconfig.build.json",
+		"compile": "npm run cleanhack && node build.js && npm run build-script",
+		"build": "npm run compile && node ./dist-build/build.js dev",
+		"deploy": "npm run compile && node ./dist-build/build.js prod"
+	},
+    "author": {
+        "name" : "Hammer Technologies LLC",
+        "email" : "contact@lumeweb.com"
+    },
+	"license": "MIT",
+	"type": "module",
+	"devDependencies": {
+		"@lumeweb/js-sha3-browser": "^0.8.1",
+		"@lumeweb/kernel-tester": "https://github.com/LumeWeb/kernel-tester.git",
+		"@lumeweb/randombytes-browser": "https://github.com/LumeWeb/randombytes-browser.git",
+		"@lumeweb/safe-buffer": "^5.2.1",
+		"@rollup/plugin-json": "^4.1.0",
+		"@rollup/plugin-node-resolve": "^13.3.0",
+		"@skynetlabs/skynet-nodejs": "^2.6.0",
+		"@types/read": "^0.0.29",
+		"@typescript-eslint/eslint-plugin": "^5.18.0",
+		"assert": "^2.0.0",
+		"buffer-browserify": "^0.2.5",
+		"buffer-fill": "^1.0.0",
+		"cpy-cli": "^4.1.0",
+		"crypto-browserify": "^3.12.0",
+		"esbuild": "^0.14.47",
+		"eslint": "^8.13.0",
+		"events": "^3.3.0",
+		"https-browserify": "^1.0.0",
+		"libskynet": "^0.0.43",
+		"libskynetnode": "^0.1.2",
+		"os-browserify": "^0.3.0",
+		"path-browserify": "^1.0.1",
+		"prettier": "^2.6.2",
+		"read": "^1.0.7",
+		"rollup": "^2.75.6",
+		"rollup-plugin-terser": "^7.0.2",
+		"stream-browserify": "^3.0.0",
+		"timers-browserify": "^2.0.12",
+		"typescript": "^4.6.3",
+		"whatwg-fetch": "^3.6.2"
+	},
+	"dependencies": {
+		"@lumeweb/kernel-dht-client": "https://github.com/LumeWeb/kernel-dht-client.git",
+		"@lumeweb/kernel-rpc-client": "https://github.com/LumeWeb/kernel-rpc-client.git",
+		"@lumeweb/kernel-utils": "https://github.com/LumeWeb/kernel-utils.git",
+		"@lumeweb/resolver": "https://github.com/LumeWeb/resolver.git#hypercore",
+		"libkmodule": "^0.2.11",
+		"randombytes": "https://github.com/LumeWeb/randombytes-browser.git",
+		"randomfill": "https://github.com/LumeWeb/randomfill.git"
+	},
+	"browser": {
+		"crypto": "crypto-browserify",
+		"timers": "timers-browserify",
+		"os": "os-browserify",
+		"stream": "os-browserify",
+		"libskynetnode": false
+	}
+}
