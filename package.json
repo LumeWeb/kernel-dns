@@ -10,10 +10,10 @@
 		"build": "npm run compile && node ./dist-build/build.js dev",
 		"deploy": "npm run compile && node ./dist-build/build.js prod"
 	},
-    "author": {
-        "name" : "Hammer Technologies LLC",
-        "email" : "contact@lumeweb.com"
-    },
+	"author": {
+		"name": "Hammer Technologies LLC",
+		"email": "contact@lumeweb.com"
+	},
 	"license": "MIT",
 	"type": "module",
 	"devDependencies": {
@@ -62,6 +62,7 @@
 		"timers": "timers-browserify",
 		"os": "os-browserify",
 		"stream": "os-browserify",
-		"libskynetnode": false
+		"libskynetnode": false,
+		"js-sha3": "@lumeweb/js-sha3-browser"
 	}
 }
