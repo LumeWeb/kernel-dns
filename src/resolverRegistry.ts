@@ -53,6 +53,7 @@ export class ResolverModule {
 
   constructor(resolver: ResolverRegistry, domain: string) {
     this.resolver = resolver;
+    this.domain = domain;
   }
 
   async resolve(
