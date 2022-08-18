@@ -52,7 +52,7 @@
 		"@lumeweb/kernel-dht-client": "https://github.com/LumeWeb/kernel-dht-client.git",
 		"@lumeweb/kernel-rpc-client": "https://github.com/LumeWeb/kernel-rpc-client.git",
 		"@lumeweb/kernel-utils": "https://github.com/LumeWeb/kernel-utils.git",
-		"@lumeweb/resolver": "https://github.com/LumeWeb/resolver.git#hypercore",
+		"@lumeweb/resolver-common": "github:LumeWeb/resolver-common",
 		"libkmodule": "^0.2.11",
 		"randombytes": "https://github.com/LumeWeb/randombytes-browser.git",
 		"randomfill": "https://github.com/LumeWeb/randomfill.git"
@@ -63,6 +63,7 @@
 		"os": "os-browserify",
 		"stream": "os-browserify",
 		"libskynetnode": false,
-		"js-sha3": "@lumeweb/js-sha3-browser"
+		"js-sha3": "@lumeweb/js-sha3-browser",
+		"@lumeweb/dht-rpc-client": false
 	}
 }

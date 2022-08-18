@@ -1,6 +1,6 @@
-import resolvers from "@lumeweb/resolver"
-import { RpcNetwork } from "@lumeweb/kernel-rpc-client"
+import { RpcNetwork } from "@lumeweb/kernel-rpc-client";
+import { ResolverRegistry } from "./resolverRegistry.js";
 
-const network = new RpcNetwork()
+const network: RpcNetwork = new RpcNetwork();
 
-export const resolver = resolvers.createDefaultResolver(network as any)
+export const resolver = new ResolverRegistry(network as any);
