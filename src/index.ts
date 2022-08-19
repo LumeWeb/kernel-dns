@@ -48,5 +48,7 @@ async function handleClear(aq: ActiveQuery) {
 }
 
 async function handleGetResolvers(aq: ActiveQuery) {
-  aq.respond([...resolver.resolvers.values()]);
+  aq.respond(
+    [...resolver.resolvers.values()].map((resolver) => resolver.domain)
+  );
 }
