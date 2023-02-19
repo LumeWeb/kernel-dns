@@ -3,33 +3,21 @@ import {
   ResolverOptions,
   DNS_RECORD_TYPE,
   resolverError,
-} from "@lumeweb/resolver-common";
-import type { RpcNetwork } from "@lumeweb/kernel-rpc-client";
-import { callModule } from "libkmodule/dist";
+} from "@lumeweb/libresolver";
+import { Client } from "@lumeweb/libkernel-universal";
 
 export class ResolverRegistry {
-  constructor(network: RpcNetwork) {
-    this._rpcNetwork = network;
-  }
-
   private _resolvers: Set<ResolverModule> = new Set<ResolverModule>();
 
   get resolvers(): Set<ResolverModule> {
     return this._resolvers;
   }
-
-  private _rpcNetwork: RpcNetwork;
-
-  get rpcNetwork(): RpcNetwork {
-    return this._rpcNetwork;
-  }
-
   public async resolve(
     domain: string,
-    options: ResolverOptions = { type: DNS_RECORD_TYPE.DEFAULT },
+    options: ResolverOptions = { type: DNS_RECORD_TYPE.CONTENT },
     bypassCache: boolean = false
   ): Promise<DNSResult> {
-    for (const resolver: ResolverModule of this._resolvers) {
+    for (const resolver of this._resolvers) {
       const result = await resolver.resolve(domain, options, bypassCache);
       if (!result.error && result.records.length) {
         return result;
@@ -55,10 +43,11 @@ export class ResolverRegistry {
   }
 }
 
-export class ResolverModule {
+export class ResolverModule extends Client {
   private _resolver: ResolverRegistry;
 
   constructor(resolver: ResolverRegistry, domain: string) {
+    super();
     this._resolver = resolver;
     this._domain = domain;
   }
@@ -74,15 +63,14 @@ export class ResolverModule {
     options: ResolverOptions,
     bypassCache: boolean
   ): Promise<DNSResult> {
-    const [ret, err] = await callModule(this._domain, "resolve", {
-      domain,
-      options,
-      bypassCache,
-    });
-    if (err) {
-      return resolverError(err);
+    try {
+      return this.callModuleReturn("resolve", {
+        domain,
+        options,
+        bypassCache,
+      });
+    } catch (e: any) {
+      return resolverError(e as Error);
     }
-
-    return ret;
   }
 }

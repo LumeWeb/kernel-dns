@@ -2,12 +2,10 @@ import { addHandler, handleMessage } from "libkmodule";
 import type { ActiveQuery } from "libkmodule";
 import { resolver } from "./common.js";
 
-import { relayReady, setupRelayListSubscription } from "./relays.js";
-import { validSkylink } from "libskynet/dist/skylinkvalidate.js";
+import { validateSkylink } from "@siaweb/libweb/dist/skylinkValidate.js";
 import { ResolverModule } from "./resolverRegistry.js";
-import { b64ToBuf } from "libskynet";
-
-setupRelayListSubscription();
+import { b64ToBuf } from "@siaweb/libweb";
+import { factory } from "@lumeweb/libkernel-universal";
 
 addHandler("resolve", handleResolve);
 addHandler("register", handleRegister);
@@ -22,23 +20,24 @@ async function handleResolve(aq: ActiveQuery) {
     return;
   }
 
-  await relayReady();
   aq.respond(
     await resolver.resolve(
-      aq.callerInput.domain,
-      aq.callerInput.options ?? {},
-      aq.callerInput.bypassCache || false
+      query?.domain,
+      query?.options,
+      query?.bypassCache || false
     )
   );
 }
 
 async function handleRegister(aq: ActiveQuery) {
-  if (!validSkylink(b64ToBuf(aq.domain).shift() as Uint8Array)) {
+  if (!validateSkylink(b64ToBuf(aq.domain).shift() as Uint8Array)?.[1]) {
     aq.reject("invalid skylink");
     return;
   }
 
-  resolver.register(new ResolverModule(resolver, aq.domain));
+  resolver.register(
+    factory<ResolverModule>(ResolverModule, aq.domain)(resolver, aq.domain)
+  );
   aq.respond();
 }
 
